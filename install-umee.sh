@@ -18,8 +18,8 @@ sleep 1
 
 
 cd $HOME
-wget -O go1.17.1.linux-amd64.tar.gz https://golang.org/dl/go1.17.1.linux-amd64.tar.gz
-rm -rf /usr/local/go && tar -C /usr/local -xzf go1.17.1.linux-amd64.tar.gz && rm go1.17.1.linux-amd64.tar.gz
+wget -O go1.18.5.linux-amd64.tar.gz https://golang.org/dl/go1.18.5.linux-amd64.tar.gz
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18.5.linux-amd64.tar.gz && rm go1.18.5.linux-amd64.tar.gz
 echo 'export GOROOT=/usr/local/go' >> $HOME/.bash_profile
 echo 'export GOPATH=$HOME/go' >> $HOME/.bash_profile
 echo 'export GO111MODULE=on' >> $HOME/.bash_profile
@@ -64,7 +64,7 @@ sudo systemctl restart systemd-journald
 sudo systemctl daemon-reload
 sudo systemctl enable umeed
 
-umeed unsafe-reset-all
+umeed tendermint unsafe-reset-all --keep-addr-book
 peers="2dad5b86bd74de333490c292bb4596cb66f1a122@89.163.164.209:26656"
 sed -i.bak -e "s/^persistent_peers *=.*/persistent_peers = \"$peers\"/" $HOME/.umee/config/config.toml
 SNAP="http://89.163.164.209:26657"
