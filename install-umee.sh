@@ -65,13 +65,19 @@ sudo systemctl restart systemd-journald
 sudo systemctl daemon-reload
 sudo systemctl enable umeed
 
+
+mv $HOME/.umee/data/priv_validator_state.json $HOME/.umee
 umeed tendermint unsafe-reset-all --keep-addr-book
+mv $HOME/.umee/priv_validator_state.json $HOME/.umee/data/
+
 peers="2dad5b86bd74de333490c292bb4596cb66f1a122@89.163.164.209:26656"
 sed -i.bak -e "s/^persistent_peers *=.*/persistent_peers = \"$peers\"/" $HOME/.umee/config/config.toml
 SNAP="http://89.163.164.209:26657"
 LATEST_HEIGHT=$(curl -s $SNAP/block | jq -r .result.block.header.height)
 TRUST_HEIGHT=$((LATEST_HEIGHT - 1000))
 TRUST_HASH=$(curl -s "$SNAP/block?height=$TRUST_HEIGHT" | jq -r .result.block_id.hash)
+
+sed -i -e "s/^snapshot-interval *=.*/snapshot-interval = 2000/" $HOME/.umee/config/app.toml
 
 sed -i.bak -E "s|^(enable[[:space:]]+=[[:space:]]+).*$|\1true| ; \
 s|^(rpc_servers[[:space:]]+=[[:space:]]+).*$|\1\"$SNAP,$SNAP\"| ; \
