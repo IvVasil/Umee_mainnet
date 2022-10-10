@@ -35,7 +35,7 @@ cd $HOME
 git clone https://github.com/umee-network/umee.git
 cd umee
 git pull
-git checkout tags/v1.0.3
+git checkout v3.0.1
 make build
 sudo cp $HOME/umee/build/umeed /usr/local/bin
 umeed version
@@ -65,7 +65,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable umeed
 
 umeed unsafe-reset-all
-peers="9e4e9006895f524e4bd5572b246c7b1e954c5f43@89.163.164.209:26656"
+peers="2dad5b86bd74de333490c292bb4596cb66f1a122@89.163.164.209:26656"
 sed -i.bak -e "s/^persistent_peers *=.*/persistent_peers = \"$peers\"/" $HOME/.umee/config/config.toml
 SNAP="http://89.163.164.209:26657"
 LATEST_HEIGHT=$(curl -s $SNAP/block | jq -r .result.block.header.height)
